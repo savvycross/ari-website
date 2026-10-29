@@ -2,36 +2,63 @@
 
 /* ---------------------------------------------------------------
    Design tokens — change a colour here and it updates site-wide.
+   Names follow the brief: ink, brand, brand-soft, cream (page
+   background), surface, line, muted, marker.
    --------------------------------------------------------------- */
 :root {
   --ink: #2a1412;
   --brand: #5e1a17;
   --brand-soft: #8a3a33;
-  --blush: #f3dfd8;
   --cream: #fbf6f1;
+  --surface: #f5ece6;
+  --line: #e6d9d2;
+  --muted: #74645f; /* a touch darker than #7a6a66 so small text passes AA on --surface */
   --marker: #e8b04a;
-  --muted: #6e5e5a; /* slightly darker than #7a6a66 so small text passes AA on blush */
-  --line: #e4d3cc;
+  --button: #5e1a17;
+  --button-hover: #8a3a33;
+  --on-button: #fbf6f1;
+  --panel: #5e1a17; /* typographic client panels */
+  --on-panel: #fbf6f1;
+  color-scheme: light;
+}
+
+:root[data-theme="dark"] {
+  --ink: #f4ebe6;
+  --brand: #e0897e; /* burgundy lightened so it reads on near-black */
+  --brand-soft: #eaa197;
+  --cream: #110b0a;
+  --surface: #1b1312;
+  --line: #34241f;
+  --muted: #b5a49e;
+  --button: #9c3b33;
+  --button-hover: #b24a41;
+  --on-button: #fbf6f1;
+  --panel: #4a1512;
+  --on-panel: #fbf6f1;
+  color-scheme: dark;
 }
 
 @theme inline {
   --color-ink: var(--ink);
   --color-brand: var(--brand);
   --color-brand-soft: var(--brand-soft);
-  --color-blush: var(--blush);
   --color-cream: var(--cream);
-  --color-marker: var(--marker);
-  --color-muted: var(--muted);
+  --color-surface: var(--surface);
   --color-line: var(--line);
-  --font-serif: var(--font-fraunces), Georgia, serif;
+  --color-muted: var(--muted);
+  --color-marker: var(--marker);
+  --color-button: var(--button);
+  --color-button-hover: var(--button-hover);
+  --color-on-button: var(--on-button);
+  --color-panel: var(--panel);
+  --color-on-panel: var(--on-panel);
+  --font-serif: var(--font-instrument-serif), Georgia, serif;
   --font-sans: var(--font-dm-sans), system-ui, sans-serif;
-  --font-hand: var(--font-caveat), "Comic Sans MS", cursive;
-  --shadow-soft: 0 1px 2px rgb(42 20 18 / 0.04), 0 8px 24px -8px rgb(42 20 18 / 0.12);
-  --shadow-lift: 0 2px 4px rgb(42 20 18 / 0.06), 0 18px 40px -12px rgb(42 20 18 / 0.22);
+  --font-mono: var(--font-plex-mono), ui-monospace, monospace;
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 html {
-  scroll-behavior: smooth;
   scroll-padding-top: 6rem;
 }
 
@@ -39,46 +66,160 @@ body {
   background: var(--cream);
   color: var(--ink);
   font-family: var(--font-sans);
+  transition: background-color 0.4s ease, color 0.4s ease;
 }
 
 ::selection {
   background: var(--marker);
-  color: var(--ink);
+  color: #2a1412;
 }
 
 :focus-visible {
-  outline: 3px solid var(--brand);
+  outline: 2px solid var(--brand);
   outline-offset: 3px;
-  border-radius: 6px;
+  border-radius: 4px;
 }
 
-.bg-brand :focus-visible,
-.on-dark:focus-visible {
-  outline-color: var(--marker);
+/* Type scale from the brief */
+.h1 {
+  font-family: var(--font-serif);
+  font-weight: 400;
+  font-size: clamp(2.25rem, 5.4vw, 5.25rem);
+  line-height: 1;
+  letter-spacing: -0.02em;
+}
+.h2 {
+  font-family: var(--font-serif);
+  font-weight: 400;
+  font-size: clamp(1.75rem, 3.2vw, 3rem);
+  line-height: 1.05;
+  letter-spacing: -0.015em;
 }
 
-/* Gentle entrance animation; skipped entirely for reduced-motion users. */
+/* Text link whose underline grows from left to right on hover */
+.link-grow {
+  background-image: linear-gradient(currentColor, currentColor);
+  background-size: 0% 1px;
+  background-position: 0 100%;
+  background-repeat: no-repeat;
+  transition: background-size 0.5s var(--ease-out-expo);
+  padding-bottom: 2px;
+}
+.link-grow:hover,
+.link-grow:focus-visible,
+.group:hover .link-grow {
+  background-size: 100% 1px;
+}
+
+/* Case-study panels: slow zoom on hover */
+.zoom-inner {
+  transition: transform 1.4s var(--ease-out-expo);
+}
+.group:hover .zoom-inner {
+  transform: scale(1.03);
+}
+
+/* ---------------------------------------------------------------
+   Scroll reveal. Elements are only hidden once the inline script
+   has added `js` to <html>, and never for reduced-motion users.
+   RevealObserver adds `is-in` when an element scrolls into view.
+   --------------------------------------------------------------- */
+[data-reveal="words"] .w {
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: top;
+  padding-bottom: 0.14em;
+  margin-bottom: -0.14em;
+}
+[data-reveal="words"] .w > span {
+  display: inline-block;
+}
+
 @media (prefers-reduced-motion: no-preference) {
-  .rise {
-    animation: rise 0.7s cubic-bezier(0.2, 0.7, 0.2, 1) both;
-    animation-delay: var(--delay, 0ms);
+  html.js [data-reveal="words"] .w > span {
+    opacity: 0;
+    transform: translateY(0.6em);
+    transition:
+      opacity 1s var(--ease-out-expo),
+      transform 1s var(--ease-out-expo);
+    transition-delay: calc(var(--d, 0ms) + var(--i, 0) * 45ms);
   }
-  @keyframes rise {
-    from {
-      opacity: 0;
-      transform: translateY(14px);
-    }
+  html.js [data-reveal="words"].is-in .w > span {
+    opacity: 1;
+    transform: none;
+  }
+
+  html.js [data-reveal="text"] {
+    opacity: 0;
+    transform: translateY(20px);
+    transition:
+      opacity 0.8s var(--ease-out-expo),
+      transform 0.8s var(--ease-out-expo);
+  }
+  html.js [data-reveal="ui"] {
+    opacity: 0;
+    transform: translateY(10px);
+    transition:
+      opacity 0.5s var(--ease-out-expo),
+      transform 0.5s var(--ease-out-expo);
+  }
+  html.js [data-reveal="card"] {
+    opacity: 0;
+    transform: translateY(44px);
+    transition:
+      opacity 0.9s var(--ease-out-expo),
+      transform 0.9s var(--ease-out-expo);
+  }
+  html.js [data-reveal="section"] {
+    opacity: 0;
+    transform: translateY(56px) scale(0.985);
+    transition:
+      opacity 1s var(--ease-out-expo),
+      transform 1s var(--ease-out-expo);
+  }
+  /* After the shorthands above, which would otherwise reset the delay. */
+  html.js [data-reveal="text"],
+  html.js [data-reveal="ui"],
+  html.js [data-reveal="card"],
+  html.js [data-reveal="section"] {
+    transition-delay: var(--d, 0ms);
+  }
+
+  html.js [data-reveal="text"].is-in,
+  html.js [data-reveal="ui"].is-in,
+  html.js [data-reveal="card"].is-in,
+  html.js [data-reveal="section"].is-in {
+    opacity: 1;
+    transform: none;
+  }
+
+  html.js [data-reveal="media"] {
+    opacity: 0;
+    clip-path: inset(10% 8% 0% round 14px);
+    transition:
+      clip-path 1.4s cubic-bezier(0.65, 0, 0.35, 1),
+      opacity 0.6s ease;
+    transition-delay: var(--d, 0ms);
+  }
+  html.js [data-reveal="media"] img {
+    transform: scale(1.08);
+    transition: transform 1.6s var(--ease-out-expo);
+    transition-delay: var(--d, 0ms);
+  }
+  html.js [data-reveal="media"].is-in {
+    opacity: 1;
+    clip-path: inset(0 round 14px);
+  }
+  html.js [data-reveal="media"].is-in img {
+    transform: none;
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  html {
-    scroll-behavior: auto;
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
   }
-}
-
-/* Thin, on-brand scrollbar for horizontal rows (testimonials). */
-.scroll-row {
-  scrollbar-width: thin;
-  scrollbar-color: var(--brand-soft) transparent;
 }

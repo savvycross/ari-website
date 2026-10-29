@@ -1,257 +1,264 @@
 import Image from "next/image";
-import { ArrowLink, Button } from "@/components/Button";
-import { Card, CardNumber } from "@/components/Card";
-import { Copy } from "@/components/Copy";
-import { CtaBand } from "@/components/CtaBand";
-import { FloralBackdrop, MarkerStroke, Sparkle, Tape } from "@/components/Doodles";
-import { Icon } from "@/components/Icon";
-import { Container, Section, SectionHeading } from "@/components/Section";
-import { TestimonialNote } from "@/components/TestimonialNote";
-import { resultHighlights } from "@/data/experience";
-import { waysToWork } from "@/data/faq";
+import Link from "next/link";
+import type { ReactNode } from "react";
+import { Button, TextLink } from "@/components/Button";
+import { ContactSection } from "@/components/ContactSection";
+import { reveal, RevealWords } from "@/components/Reveal";
+import { TestimonialSlider } from "@/components/TestimonialSlider";
+import { engagements } from "@/data/experience";
+import { howIWork } from "@/data/faq";
 import { services } from "@/data/services";
-import { idealClients, site } from "@/data/site";
+import { bio, site } from "@/data/site";
 import { testimonials } from "@/data/testimonials";
+
+const pad = (n: number) => String(n).padStart(2, "0");
 
 export default function Home() {
   return (
     <>
       <Hero />
-      <WhoIHelp />
-      <Results />
-      <ServicesPreview />
-      <WaysToWork />
+      <AboutStrip />
+      <ExperienceRows />
+      <ServicesList />
+      <Process />
       <Testimonials />
-      <CtaBand />
+      <ContactSection />
     </>
+  );
+}
+
+function Wrap({ children, className = "" }: { children: ReactNode; className?: string }) {
+  return <div className={`mx-auto w-full max-w-[90rem] px-5 sm:px-8 lg:px-12 ${className}`}>{children}</div>;
+}
+
+/** Section heading in her words, with an optional (02)-style count. */
+function Heading({ id, text, count }: { id: string; text: string; count?: number }) {
+  return (
+    <div className="flex items-baseline gap-4">
+      <RevealWords id={id} text={text} className="h2 text-ink" />
+      {count !== undefined && (
+        <span className="font-mono text-sm text-muted" {...reveal("ui", 300)}>
+          ({pad(count)})
+        </span>
+      )}
+    </div>
   );
 }
 
 function Hero() {
   return (
-    <section aria-labelledby="hero-heading" className="relative overflow-hidden bg-gradient-to-b from-blush/70 via-blush/30 to-cream">
-      <FloralBackdrop />
-      <Container className="relative grid items-center gap-14 pt-14 pb-20 sm:pt-20 lg:grid-cols-[1.15fr_0.85fr] lg:gap-10 lg:pt-24 lg:pb-28">
-        <div>
-          <p className="rise inline-flex items-center gap-2 rounded-full border border-brand/15 bg-cream/80 px-4 py-2 text-[0.8rem] font-medium text-brand shadow-sm backdrop-blur sm:text-sm">
-            <span aria-hidden="true" className="h-2 w-2 shrink-0 rounded-full bg-emerald-600" />
-            <span>{site.status.join(" · ")}</span>
+    <section aria-labelledby="hero-heading">
+      <Wrap className="grid gap-12 pt-10 pb-20 sm:pt-16 lg:grid-cols-12 lg:gap-8 lg:pt-20 lg:pb-28">
+        <div className="flex flex-col justify-center lg:col-span-7 lg:pr-6">
+          <p className="flex flex-wrap items-center gap-x-3 gap-y-1 text-[0.95rem] text-muted" {...reveal("ui")}>
+            <span aria-hidden="true" className="h-2 w-2 rounded-full bg-brand" />
+            <span className="font-medium text-ink">{site.name}</span>
+            <span aria-hidden="true" className="hidden text-line sm:inline">—</span>
+            <span className="basis-full pl-5 sm:basis-auto sm:pl-0">{site.title}</span>
           </p>
 
-          <h1
+          <RevealWords
+            as="h1"
             id="hero-heading"
-            className="rise mt-7 font-serif text-[2.75rem] leading-[1.02] font-medium tracking-tight text-ink sm:text-6xl lg:text-7xl"
-            style={{ ["--delay" as string]: "80ms" }}
-          >
-            Making your day{" "}
-            <span className="relative inline-block italic text-brand">
-              easier
-              <MarkerStroke className="absolute -bottom-2 left-0 h-4 w-full" />
-            </span>{" "}
-            with structured support
-          </h1>
+            text={site.tagline}
+            mark="Easier"
+            delayMs={120}
+            className="h1 mt-8 text-ink"
+          />
 
-          <p
-            className="rise mt-7 max-w-xl text-lg leading-relaxed text-muted sm:text-xl"
-            style={{ ["--delay" as string]: "160ms" }}
-          >
-            <Copy text={site.intro} />
+          <p className="mt-8 max-w-[38rem] text-lg leading-relaxed text-muted sm:text-xl" {...reveal("text", 450)}>
+            {bio[1]}
           </p>
 
-          <div
-            className="rise mt-9 flex flex-col gap-3 sm:flex-row"
-            style={{ ["--delay" as string]: "240ms" }}
-          >
-            <span className="relative inline-flex">
-              <Tape className="-top-3 -left-5 h-5 w-16 -rotate-[28deg]" />
-              <Button href="/contact/" arrow className="w-full sm:w-auto">
-                Let&rsquo;s Work Together
-              </Button>
-            </span>
-            <Button href="/experience/" variant="secondary">
+          <div className="mt-10 flex flex-col gap-3 sm:flex-row" {...reveal("ui", 650)}>
+            <Button href="/contact/" arrow>
+              Let&rsquo;s work together
+            </Button>
+            <Button href="/experience/" variant="outline">
               View My Work
             </Button>
           </div>
         </div>
 
-        <div className="rise relative mx-auto w-full max-w-[22rem] lg:max-w-[25rem]" style={{ ["--delay" as string]: "200ms" }}>
-          <figure className="relative rotate-[2.5deg] rounded-[6px] bg-white p-3 pb-14 shadow-[var(--shadow-lift)]">
-            <Tape className="-top-4 left-1/2 -translate-x-1/2 -rotate-[4deg]" />
+        <div className="relative lg:col-span-5">
+          {/* The one piece of tape on the site, holding the portrait. */}
+          <div className="absolute -top-4 left-1/2 z-10 -translate-x-1/2" {...reveal("ui", 1500)}>
+            <svg aria-hidden="true" viewBox="0 0 120 34" className="h-9 w-32 -rotate-3 text-marker">
+              <path
+                d="M4 4 9 2l4 3 5-3 5 2 4-2 88 1 2 3-2 3 3 3-2 4 3 3-2 4 2 3-3 3-94 1-4-2-5 2-4-3-5 2-3-3 2-4-3-3 2-4-2-3 2-4-2-3Z"
+                fill="currentColor"
+                opacity=".8"
+              />
+            </svg>
+          </div>
+          <div className="overflow-hidden rounded-[14px]" {...reveal("media", 750)}>
             <Image
               src="/images/pere-portrait.webp"
-              alt="Portrait of Pere Arilda wearing glasses and a white shirt"
-              width={840}
-              height={1050}
+              alt="Portrait of Pere Arilda"
+              width={1100}
+              height={1375}
               priority
-              sizes="(min-width: 1024px) 400px, 90vw"
-              className="aspect-[4/5] w-full rounded-[3px] object-cover"
+              sizes="(min-width: 1024px) 40vw, 100vw"
+              className="aspect-[4/5] w-full object-cover"
             />
-            <figcaption className="absolute inset-x-0 bottom-3 text-center font-hand text-2xl text-brand">
-              Hi, I&rsquo;m Pere!
-            </figcaption>
-          </figure>
-          <Sparkle className="absolute -top-6 -left-6 h-9 w-9" />
-          <Sparkle className="absolute -right-3 bottom-24 h-5 w-5" />
+          </div>
         </div>
-      </Container>
+      </Wrap>
     </section>
   );
 }
 
-function WhoIHelp() {
+function AboutStrip() {
   return (
-    <section aria-labelledby="who-heading" className="border-y border-line bg-cream py-10">
-      <Container className="flex flex-col gap-5 lg:flex-row lg:items-center lg:gap-10">
-        <h2 id="who-heading" className="shrink-0 font-serif text-2xl text-ink">
-          Who I help
-        </h2>
-        <ul className="flex flex-wrap gap-2.5">
-          {idealClients.map((client) => (
-            <li
-              key={client}
-              className="rounded-full border border-brand/15 bg-blush/60 px-4 py-2 text-sm font-medium text-brand"
-            >
-              {client}
+    <section aria-labelledby="about-heading" className="border-t border-line">
+      <Wrap className="grid gap-10 py-20 sm:py-28 lg:grid-cols-12 lg:gap-8">
+        <RevealWords
+          id="about-heading"
+          text={bio[0]}
+          className="font-serif text-[clamp(2rem,4.2vw,4rem)] leading-[1.02] text-ink lg:col-span-5"
+        />
+        <div className="space-y-6 text-lg leading-relaxed text-muted lg:col-span-6 lg:col-start-7">
+          {bio.slice(2, 5).map((p, i) => (
+            <p key={i} {...reveal("text", 150 + i * 120)}>
+              {p}
+            </p>
+          ))}
+          <div className="pt-2" {...reveal("ui", 500)}>
+            <TextLink href="/about/">Read more</TextLink>
+          </div>
+        </div>
+      </Wrap>
+    </section>
+  );
+}
+
+function ExperienceRows() {
+  return (
+    <section aria-labelledby="experience-heading" className="border-t border-line">
+      <Wrap className="py-20 sm:py-28">
+        <Heading id="experience-heading" text="Experience and Credibility" count={engagements.length} />
+        <ul className="mt-12 border-t border-line">
+          {engagements.map((e, i) => (
+            <li key={e.slug} className="border-b border-line" {...reveal("card", i * 80)}>
+              <Link
+                href={`/experience/${e.slug}/`}
+                className="group grid gap-6 py-8 sm:py-10 md:grid-cols-12 md:gap-8"
+              >
+                <span className="font-mono text-sm text-muted md:col-span-1 md:pt-3">{pad(i + 1)}</span>
+                <div className="md:col-span-6 md:self-center">
+                  <h3 className="font-serif text-[clamp(2.25rem,4.5vw,4rem)] leading-none text-ink">
+                    <span className="link-grow">{e.client}</span>
+                  </h3>
+                  <p className="mt-4 max-w-xl text-lg text-muted">{e.summary}</p>
+                  <ul className="mt-5 flex flex-wrap gap-x-2 gap-y-1 font-mono text-[0.72rem] leading-relaxed text-muted">
+                    {e.workstreams.map((w, j) => (
+                      <li key={w.title} className="flex gap-2">
+                        {j > 0 && <span aria-hidden="true" className="text-line">/</span>}
+                        {w.title}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+                <div className="relative overflow-hidden rounded-[14px] md:col-span-5">
+                  <div className="zoom-inner flex aspect-[16/10] items-end justify-between bg-panel p-6 text-on-panel">
+                    <span className="font-serif text-4xl sm:text-5xl">{e.client}</span>
+                    <span className="grid h-11 w-11 place-items-center rounded-full border border-on-panel/30 transition-colors group-hover:bg-on-panel group-hover:text-panel">
+                      <svg aria-hidden="true" viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
+                        <path d="M7 17 17 7M8 7h9v9" />
+                      </svg>
+                    </span>
+                  </div>
+                </div>
+              </Link>
             </li>
           ))}
         </ul>
-      </Container>
+      </Wrap>
     </section>
   );
 }
 
-function Results() {
+function ServicesList() {
   return (
-    <Section labelledBy="results-heading">
-      <div className="flex flex-col justify-between gap-6 md:flex-row md:items-end">
-        <SectionHeading
-          id="results-heading"
-          eyebrow="Results snapshot"
-          title="Support that shows up in the results"
-        />
-        <div className="-mt-4 mb-12 shrink-0 md:mt-0">
-          <ArrowLink href="/experience/">Explore my experience</ArrowLink>
+    <section aria-labelledby="services-heading" className="border-t border-line">
+      <Wrap className="py-20 sm:py-28">
+        <div className="flex flex-wrap items-end justify-between gap-6">
+          <Heading id="services-heading" text="Services" count={services.length} />
+          <div {...reveal("ui", 200)}>
+            <TextLink href="/services/">Read more</TextLink>
+          </div>
         </div>
-      </div>
-      <ol className="grid gap-6 md:grid-cols-3">
-        {resultHighlights.map((r, i) => (
-          <Card key={r.headline} as="li" className="flex flex-col">
-            <div className="flex items-start justify-between">
-              <CardNumber n={i + 1} />
-              <span className="rounded-full bg-blush px-3 py-1 text-xs font-semibold tracking-wide text-brand">
-                {r.client}
-              </span>
-            </div>
-            <p className="mt-8 font-serif text-2xl leading-snug text-ink">{r.headline}</p>
-            <p className="mt-3 text-muted">{r.detail}</p>
-          </Card>
-        ))}
-      </ol>
-    </Section>
+        <ol className="mt-12 border-t border-line">
+          {services.map((s, i) => (
+            <li
+              key={s.slug}
+              className="grid gap-3 border-b border-line py-7 md:grid-cols-12 md:gap-8 md:py-9"
+              {...reveal("text", i * 60)}
+            >
+              <span className="font-mono text-sm text-muted md:col-span-1 md:pt-2">{pad(i + 1)}</span>
+              <h3 className="font-serif text-[1.75rem] leading-tight text-ink sm:text-3xl md:col-span-4">
+                <Link href={`/services/#${s.slug}`} className="link-grow">
+                  {s.title}
+                </Link>
+                {s.note && <span className="mt-1 block font-sans text-sm text-muted">{s.note}</span>}
+              </h3>
+              <div className="text-muted md:col-span-7 md:pt-2">
+                {s.summary ? (
+                  <p className="max-w-2xl leading-relaxed">{s.summary}</p>
+                ) : (
+                  <ul className="max-w-2xl space-y-1.5 leading-relaxed">
+                    {s.tasks.map((t) => (
+                      <li key={t}>{t}</li>
+                    ))}
+                  </ul>
+                )}
+              </div>
+            </li>
+          ))}
+        </ol>
+      </Wrap>
+    </section>
   );
 }
 
-function ServicesPreview() {
+function Process() {
   return (
-    <Section tone="blush" labelledBy="services-heading">
-      <div className="flex flex-col justify-between gap-6 md:flex-row md:items-end">
-        <SectionHeading
-          id="services-heading"
-          eyebrow="Services"
-          title="What I can take off your plate"
-        />
-        <div className="-mt-4 mb-12 shrink-0 md:mt-0">
-          <ArrowLink href="/services/">See all services</ArrowLink>
+    <section aria-labelledby="process-heading" className="border-t border-line bg-surface">
+      <Wrap className="py-20 sm:py-28">
+        <div className="grid gap-6 lg:grid-cols-12 lg:gap-8">
+          <div className="lg:col-span-5">
+            <Heading id="process-heading" text="How I Work" />
+          </div>
+          <p className="text-xl leading-relaxed text-ink lg:col-span-6 lg:col-start-7 lg:pt-3" {...reveal("text", 150)}>
+            {howIWork.intro}
+          </p>
         </div>
-      </div>
-      <ul className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-        {services.map((s) => (
-          <Card key={s.slug} as="li" className="group bg-cream/90 transition-shadow hover:shadow-[var(--shadow-lift)]">
-            <span className="grid h-12 w-12 place-items-center rounded-2xl bg-blush text-brand transition-colors group-hover:bg-brand group-hover:text-cream">
-              <Icon name={s.icon} className="h-6 w-6" />
-            </span>
-            <h3 className="mt-6 font-serif text-xl text-ink">
-              {s.title}
-              {s.note && (
-                <span className="ml-2 inline-block translate-y-[-2px] rounded-full border border-line px-2 py-0.5 align-middle font-sans text-[0.7rem] font-semibold text-muted">
-                  {s.note}
-                </span>
-              )}
-            </h3>
-            <p className="mt-2 leading-relaxed text-muted">{s.summary}</p>
-          </Card>
-        ))}
-      </ul>
-    </Section>
-  );
-}
-
-function WaysToWork() {
-  return (
-    <Section labelledBy="ways-heading">
-      <SectionHeading
-        id="ways-heading"
-        eyebrow="Ways to work together"
-        title="Choose how we can work"
-        intro="Ongoing support or a focused project: pick the arrangement that fits where your business is right now."
-        align="center"
-      />
-      <ol className="mx-auto grid max-w-4xl gap-8 md:grid-cols-2">
-        {waysToWork.map((w, i) => (
-          <Card key={w.name} as="li" className="flex flex-col pt-10">
-            <Tape className={`-top-3 left-8 ${i % 2 ? "rotate-[6deg]" : "-rotate-[6deg]"}`} />
-            <div className="flex items-baseline justify-between gap-4">
-              <h3 className="font-serif text-3xl text-ink">{w.name}</h3>
-              <CardNumber n={i + 1} className="text-4xl" />
-            </div>
-            <p className="mt-2 text-muted">{w.bestFor}</p>
-            <ul className="mt-7 flex-1 space-y-3">
-              {w.points.map((p) => (
-                <li key={p} className="flex gap-3">
-                  <span className="mt-0.5 grid h-6 w-6 shrink-0 place-items-center rounded-full bg-blush text-brand">
-                    <Icon name="check" className="h-3.5 w-3.5" />
-                  </span>
-                  <Copy text={p} />
-                </li>
-              ))}
-            </ul>
-            <p className="mt-8 rounded-xl bg-cream px-4 py-3 text-sm text-ink">
-              <span className="font-semibold text-brand">Pricing:</span> {w.pricing}
-            </p>
-            <Button href="/contact/" arrow className="mt-5 w-full">
-              {w.cta}
-            </Button>
-          </Card>
-        ))}
-      </ol>
-
-      <div className="mx-auto mt-10 flex max-w-4xl flex-col items-center justify-between gap-4 rounded-[18px] border border-dashed border-brand/30 bg-blush/40 px-7 py-6 text-center sm:flex-row sm:text-left">
-        <div>
-          <p className="font-serif text-xl text-ink">Not sure which fits?</p>
-          <p className="text-muted">Tell me what you need and I&rsquo;ll suggest the right setup.</p>
-        </div>
-        <ArrowLink href="/contact/">Tell me what you need</ArrowLink>
-      </div>
-    </Section>
+        <ol className="mt-14 grid border-t border-line md:grid-cols-5">
+          {howIWork.steps.map((step, i) => (
+            <li
+              key={step.title}
+              className="border-b border-line py-7 md:border-b-0 md:border-l md:px-6 md:py-8 md:first:border-l-0 md:first:pl-0"
+              {...reveal("text", i * 90)}
+            >
+              <span className="font-mono text-sm text-brand">{pad(i + 1)}</span>
+              <h3 className="mt-5 font-serif text-2xl leading-tight text-ink">{step.title}</h3>
+              <p className="mt-3 leading-relaxed text-muted">{step.text}</p>
+            </li>
+          ))}
+        </ol>
+      </Wrap>
+    </section>
   );
 }
 
 function Testimonials() {
   return (
-    <Section tone="blush" labelledBy="testimonials-heading" className="overflow-hidden">
-      <SectionHeading id="testimonials-heading" eyebrow="Kind words" title="What clients say" />
-      <div
-        role="region"
-        aria-label="Client testimonials (scrolls sideways)"
-        tabIndex={0}
-        className="scroll-row -mx-5 flex snap-x snap-mandatory gap-8 overflow-x-auto px-5 pt-6 pb-10 sm:-mx-8 sm:px-8"
-      >
-        {testimonials.map((t, i) => (
-          <div key={t.id} className="w-[85%] shrink-0 snap-start sm:w-[26rem]">
-            <TestimonialNote t={t} index={i} />
-          </div>
-        ))}
-      </div>
-    </Section>
+    <section aria-label="Testimonials" className="border-t border-line">
+      <Wrap className="grid gap-10 py-20 sm:py-28 lg:grid-cols-12 lg:gap-8">
+        <div className="lg:col-span-10 lg:col-start-2" {...reveal("section")}>
+          <TestimonialSlider items={testimonials} />
+        </div>
+      </Wrap>
+    </section>
   );
 }

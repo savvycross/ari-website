@@ -4,9 +4,9 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { nav, site } from "@/data/site";
-import { Button } from "./Button";
 import { Icon } from "./Icon";
 import { LocalClock } from "./LocalClock";
+import { ThemeToggle } from "./ThemeToggle";
 
 function isActive(pathname: string, href: string) {
   if (href === "/") return pathname === "/";
@@ -59,25 +59,20 @@ export function Header() {
   }, [open]);
 
   return (
-    <header className="sticky top-0 z-40 border-b border-line/70 bg-cream/85 backdrop-blur-md">
-      <div className="mx-auto flex h-18 max-w-6xl items-center justify-between gap-4 px-5 sm:px-8">
-        <Link href="/" className="flex items-center gap-3" aria-label={`${site.name}, home`}>
-          <span
-            aria-hidden="true"
-            className="grid h-9 w-9 place-items-center rounded-full bg-brand font-serif text-sm font-semibold text-cream"
-          >
-            {site.initials}
+    <header className="sticky top-0 z-40 border-b border-line bg-cream/85 backdrop-blur-md">
+      <div className="mx-auto flex h-[4.5rem] max-w-[90rem] items-center justify-between gap-6 px-5 sm:px-8 lg:px-12">
+        <div className="flex min-w-0 items-center gap-5">
+          <Link href="/" className="flex items-center gap-2.5 font-medium text-ink">
+            <span aria-hidden="true" className="h-2 w-2 rounded-full bg-brand" />
+            {site.name}
+          </Link>
+          <span className="hidden border-l border-line pl-5 md:block">
+            <LocalClock />
           </span>
-          <span className="leading-tight">
-            <span className="block font-serif text-lg font-medium text-ink">{site.name}</span>
-            <span className="hidden sm:block lg:hidden xl:block">
-              <LocalClock />
-            </span>
-          </span>
-        </Link>
+        </div>
 
         <nav aria-label="Main" className="hidden lg:block">
-          <ul className="flex items-center gap-1">
+          <ul className="flex items-center gap-7">
             {nav.map((item) => {
               const active = isActive(pathname, item.href);
               return (
@@ -85,17 +80,13 @@ export function Header() {
                   <Link
                     href={item.href}
                     aria-current={active ? "page" : undefined}
-                    className={`relative rounded-full px-3 py-2 text-[0.92rem] font-medium transition-colors ${
-                      active ? "text-brand" : "text-ink/80 hover:text-brand"
+                    className={`text-[0.95rem] transition-colors ${
+                      active ? "text-ink" : "text-muted hover:text-ink"
                     }`}
                   >
-                    {item.label}
-                    {active && (
-                      <span
-                        aria-hidden="true"
-                        className="absolute inset-x-3 -bottom-0.5 h-[3px] rounded-full bg-marker"
-                      />
-                    )}
+                    <span className={active ? "border-b border-ink pb-0.5" : "link-grow"}>
+                      {item.label}
+                    </span>
                   </Link>
                 </li>
               );
@@ -104,18 +95,20 @@ export function Header() {
         </nav>
 
         <div className="flex items-center gap-2">
-          <span className="hidden sm:block">
-            <Button href="/contact/" className="!min-h-10 !px-5 !py-2">
-              Let&rsquo;s Talk
-            </Button>
-          </span>
+          <ThemeToggle />
+          <Link
+            href="/contact/"
+            className="hidden min-h-11 items-center rounded-full bg-button px-5 text-[0.95rem] font-medium text-on-button transition-colors hover:bg-button-hover sm:inline-flex"
+          >
+            Let&rsquo;s talk
+          </Link>
           <button
             ref={menuButton}
             type="button"
             onClick={() => setOpen(true)}
             aria-expanded={open}
             aria-controls="mobile-menu"
-            className="grid h-11 w-11 place-items-center rounded-full border border-line text-brand lg:hidden"
+            className="grid h-11 w-11 place-items-center rounded-full border border-line text-ink lg:hidden"
           >
             <Icon name="menu" className="h-5 w-5" />
             <span className="sr-only">Open menu</span>
@@ -129,10 +122,10 @@ export function Header() {
           ref={overlay}
           role="dialog"
           aria-modal="true"
-          aria-label="Site menu"
-          className="fixed inset-0 z-50 flex h-dvh flex-col overflow-y-auto bg-cream px-6 pt-5 pb-10 lg:hidden"
+          aria-label="Menu"
+          className="fixed inset-0 z-50 flex h-dvh flex-col overflow-y-auto bg-cream px-5 pt-4 pb-10 sm:px-8 lg:hidden"
         >
-          <div className="flex items-center justify-between">
+          <div className="flex h-10 items-center justify-between">
             <LocalClock />
             <button
               type="button"
@@ -140,46 +133,41 @@ export function Header() {
                 setOpen(false);
                 menuButton.current?.focus();
               }}
-              className="grid h-11 w-11 place-items-center rounded-full border border-line text-brand"
+              className="grid h-11 w-11 place-items-center rounded-full border border-line text-ink"
             >
               <Icon name="close" className="h-5 w-5" />
               <span className="sr-only">Close menu</span>
             </button>
           </div>
           <nav aria-label="Mobile" className="mt-10 flex-1">
-            <ul className="space-y-1">
+            <ul className="border-t border-line">
               {nav.map((item, i) => {
                 const active = isActive(pathname, item.href);
                 return (
-                  <li key={item.href} className="rise" style={{ ["--delay" as string]: `${i * 40}ms` }}>
+                  <li key={item.href} className="border-b border-line">
                     <Link
                       href={item.href}
                       aria-current={active ? "page" : undefined}
-                      className={`flex items-baseline gap-4 border-b border-line py-4 font-serif text-4xl ${
+                      className={`flex items-baseline justify-between py-4 font-serif text-[2.6rem] leading-none ${
                         active ? "text-brand" : "text-ink"
                       }`}
                     >
-                      <span className="font-sans text-xs tabular-nums text-muted">
+                      {item.label}
+                      <span className="font-mono text-xs text-muted">
                         {String(i + 1).padStart(2, "0")}
                       </span>
-                      {item.label}
                     </Link>
                   </li>
                 );
               })}
             </ul>
           </nav>
-          <div className="mt-10 space-y-4">
-            <Button href="/contact/" arrow className="w-full">
-              Let&rsquo;s Talk
-            </Button>
-            <a
-              href={`mailto:${site.contact.email}`}
-              className="block text-center text-sm font-medium text-muted underline underline-offset-4"
-            >
-              {site.contact.email}
-            </a>
-          </div>
+          <Link
+            href="/contact/"
+            className="mt-10 inline-flex min-h-12 items-center justify-center rounded-full bg-button font-medium text-on-button"
+          >
+            Let&rsquo;s talk
+          </Link>
         </div>
       )}
     </header>
