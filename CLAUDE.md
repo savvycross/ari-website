@@ -119,7 +119,7 @@ All text below is pulled from the Appendix exactly.
 
 ### Home
 1. **Hero:** small line with a burgundy dot: her Professional Name and Professional Title exactly. H1: her Tagline exactly. Paragraph: the second paragraph of her bio exactly. Buttons: "Let's work together" (to Contact) and "View My Work". Large portrait with one piece of tape, `media` reveal.
-2. **About strip:** left, in large serif: "I’m an Executive Virtual Assistant." Right: her bio paragraphs about the two brands, exactly. Link to About.
+2. **About strip:** left, in large serif: "I’m an Operations Manager." Right: her bio paragraphs about the two brands, exactly. Link to About.
 3. **Experience and Credibility:** count `(02)`. Two full-width rows: index, client name (EsteBare / Karr), her one-line summary exactly, and her workstream headings as small tags. Each row links to the case study. If there is no photo, use a typographic burgundy panel with the client name.
 4. **Services:** count `(06)`. Numbered list with thin dividers: number, service name exactly, the first sentence of her paragraph exactly (Workflow and Systems Organisation has no paragraph, so show its bullet points instead), link to Services. No icons, no cards.
 5. **How I Work:** her intro line exactly, then the 5 steps (title and description exactly) as a numbered row on desktop, vertical on mobile, with dividing lines.
@@ -202,3 +202,12 @@ Page titles built from her name and title, e.g. "Pere Arilda | Operations Manage
 - Any photos for the EsteBare and Karr rows
 
 @AGENTS.md
+
+---
+
+## UPDATES FROM PERE (after the first review)
+
+- She is an **Operations Manager**, "not executive whatsoever". `content/brief.md` was updated accordingly; every edit to it is logged in `content/brief-changes.md`.
+- Testimonials show the client's photo: Estelle Agyeman (founder of Karr) and Esther Uzodinma (EsteBare). Photos are in `public/images/testimonials/`.
+- Show the brands' logos, not just their names (estebare.com, karrcompany.co.uk). Logo files go in `public/images/brands/`.
+- The About section must show her complete bio.

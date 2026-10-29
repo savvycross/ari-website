@@ -18,6 +18,8 @@ Then open http://localhost:3000. Changes to files show up straight away.
 
 `npm run preview` builds the real static site and serves it at http://localhost:3000. That is exactly what will go live.
 
+**As a shareable link (Netlify):** in Netlify choose *Add new site → Import an existing project → GitHub*, pick `savvycross/ari-website`, set the branch to `claude/new-session-40dsu0`, and click *Deploy*. The build settings are already in `netlify.toml`.
+
 **As a shareable link (Vercel):** in Vercel choose *Add New → Project*, import `savvycross/ari-website`, and click *Deploy* (no settings needed). Every push to any branch then gets its own preview URL that can be sent to Pere.
 
 ## Editing text
@@ -38,7 +40,13 @@ Anything starting with `TODO_` is still waiting on Pere. Search the project for 
 
 ## Images
 
-Photos live in `/public/images`. To swap the portrait, replace `public/images/pere-portrait.webp` with a new `.webp` of the same name (portrait shape, about 1100×1375px).
+Photos live in `/public/images`:
+
+- `pere-portrait.webp`: Pere's portrait (Home and About)
+- `testimonials/esther-uzodinma.webp`, `testimonials/estelle-agyeman.webp`: testimonial photos (square, about 400×400px)
+- `brands/`: client logos. Add a file (SVG, or PNG with a transparent background), then set `logo: "/images/brands/<file>"` for that client in `data/experience.ts`. Logos are shown in white on the burgundy panels.
+
+To swap the portrait, replace `public/images/pere-portrait.webp` with a new `.webp` of the same name (portrait shape, about 1100×1375px).
 
 After changing Pere's name or title, run `node scripts/generate-og.mjs` to refresh the social-sharing image.
 

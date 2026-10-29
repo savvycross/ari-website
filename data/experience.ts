@@ -16,8 +16,12 @@ export type Engagement = {
   summary: string;
   workstreams: Workstream[];
   testimonialId: string;
-  // TODO_PERE: add a photo path (e.g. "/images/estebare.webp") if Pere supplies one.
-  image?: string;
+  website: string;
+  /**
+   * Brand logo in /public/images/brands (SVG or PNG with a transparent
+   * background). Until one is added, the client name is shown instead.
+   */
+  logo?: string;
 };
 
 export const engagements: Engagement[] = [
@@ -26,6 +30,8 @@ export const engagements: Engagement[] = [
     client: "EsteBare",
     summary: "Contributed to brand growth and operations",
     testimonialId: "esther-uzodinma",
+    website: "https://www.estebare.com",
+    // TODO_PERE: add the EsteBare logo, e.g. logo: "/images/brands/estebare.svg"
     workstreams: [
       {
         title: "Social Media & Brand Presence",
@@ -87,6 +93,8 @@ export const engagements: Engagement[] = [
     summary:
       "Contributed to team coordination, client contract management, and business operations.",
     testimonialId: "estelle-agyeman",
+    website: "https://karrcompany.co.uk",
+    // TODO_PERE: add the Karr logo, e.g. logo: "/images/brands/karr.svg"
     workstreams: [
       {
         title: "Client Contracts & Administrative Coordination",
@@ -131,3 +139,5 @@ export const engagements: Engagement[] = [
     ],
   },
 ];
+
+export const engagementBySlug = (slug: string) => engagements.find((e) => e.slug === slug);

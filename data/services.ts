@@ -30,9 +30,9 @@ export const services: Service[] = [
       "Basic Social Media Support",
     ],
     paragraph:
-      "As an Executive Virtual Assistant, I offer a wide range of administrative support services to help you stay organized and focused on your core business activities. Let's work together to streamline your operations and enhance your productivity.",
+      "As an Operations Manager, I offer a wide range of administrative support services to help you stay organized and focused on your core business activities. Let's work together to streamline your operations and enhance your productivity.",
     summary:
-      "As an Executive Virtual Assistant, I offer a wide range of administrative support services to help you stay organized and focused on your core business activities.",
+      "As an Operations Manager, I offer a wide range of administrative support services to help you stay organized and focused on your core business activities.",
   },
   {
     slug: "tech-tool-support",
@@ -45,9 +45,9 @@ export const services: Service[] = [
       "Data Entry and Database Management",
     ],
     paragraph:
-      "As an Executive Virtual Assistant, I provide hands-on support with the digital tools and systems you rely on daily. From setup to troubleshooting, I help you stay efficient and tech-savvy, so you can focus on what truly matters. Let’s simplify your workflow with the right tech solutions.",
+      "As an Operations Manager, I provide hands-on support with the digital tools and systems you rely on daily. From setup to troubleshooting, I help you stay efficient and tech-savvy, so you can focus on what truly matters. Let’s simplify your workflow with the right tech solutions.",
     summary:
-      "As an Executive Virtual Assistant, I provide hands-on support with the digital tools and systems you rely on daily.",
+      "As an Operations Manager, I provide hands-on support with the digital tools and systems you rely on daily.",
   },
   {
     slug: "workflow-systems-organisation",
@@ -71,9 +71,9 @@ export const services: Service[] = [
       "Communications between business partners",
     ],
     paragraph:
-      "As an Executive Virtual Assistant, I specialize in managing client communications and fostering strong relationships. From onboarding to engagement, I help ensure smooth interactions that build trust and boost client satisfaction. Let’s work together to keep your communication clear, consistent, and professional.",
+      "As an Operations Manager, I specialize in managing client communications and fostering strong relationships. From onboarding to engagement, I help ensure smooth interactions that build trust and boost client satisfaction. Let’s work together to keep your communication clear, consistent, and professional.",
     summary:
-      "As an Executive Virtual Assistant, I specialize in managing client communications and fostering strong relationships.",
+      "As an Operations Manager, I specialize in managing client communications and fostering strong relationships.",
   },
   {
     slug: "customer-support",

@@ -22,6 +22,7 @@ const inBrief = (s) => briefN.includes(norm(s));
 const SKIP_KEYS = new Set([
   "slug", "id", "href", "url", "email", "phoneDisplay", "phoneHref", "whatsappHref",
   "linkedin", "formEndpoint", "location", "initials", "image", "company", "testimonialId",
+  "role", "photo", "logo", "website",
 ]);
 
 const problems = [];
@@ -72,6 +73,9 @@ const FUNCTIONAL = new Set([
   "LinkedIn", "Email", "WhatsApp", "Phone", "EMAIL", "WHATSAPP", "Previous testimonial",
   "Next testimonial", "Testimonials", "of", "Main", "Mobile", "Footer",
   "Portrait of Pere Arilda", "perearilda@gmail.com", "+234 815 415 9539",
+  "Request portfolio", "Next", "estebare.com", "karrcompany.co.uk", "RESULT",
+  // captions confirmed by Pere (see content/brief-changes.md)
+  "Founder of Karr",
   // form
   "Name", "Service needed", "Engagement type", "Timeline", "Message", "Your name",
   "you@company.com", "Select a service", "Select a type", "Select a timeline", "Not sure yet",
@@ -116,6 +120,8 @@ if (existsSync(outDir)) {
     for (const t of fragments) {
       if (!t || /^[\d\s().:/·|-]+$/.test(t)) continue; // numbers, times, counts
       if (t.startsWith("TODO_") || t.startsWith("©")) continue;
+      // Generated alt text / link descriptions
+      if (/^Photo of .+$/.test(t) || /^.+ (logo|website \(opens in a new tab\))$/.test(t)) continue;
       const ok = (x) => FUNCTIONAL.has(x) || FUNCTIONAL.has(x.replace(/’/g, "'")) || inBrief(x);
       if (ok(t)) continue;
       // Page titles like "Contact | Pere Arilda" are built from allowed parts.

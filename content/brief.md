@@ -11,7 +11,7 @@ Tagline: Making Your Day Easier With Structured Support
 
 Professional Bio
 
-I’m an Executive Virtual Assistant.
+I’m an Operations Manager.
 
 I support founders, business owners, and professionals by bringing structure, coordination, and follow-through to their operations. My approach is proactive and detail-oriented, with a focus on understanding each business’s unique needs and providing tailored support that keeps daily operations running smoothly.
 
@@ -41,7 +41,7 @@ Administrative Support
    Newsletter Management
    Basic Social Media Support
    
-As an Executive Virtual Assistant, I offer a wide range of administrative support services to help you stay organized and focused on your core business activities. Let's work together to streamline your operations and enhance your productivity.
+As an Operations Manager, I offer a wide range of administrative support services to help you stay organized and focused on your core business activities. Let's work together to streamline your operations and enhance your productivity.
 
 
 Tech & Tool Support
@@ -51,7 +51,7 @@ Tech & Tool Support
    Creating & Managing Basic Workflows
    Data Entry and Database Management
    
-As an Executive Virtual Assistant, I provide hands-on support with the digital tools and systems you rely on daily. From setup to troubleshooting, I help you stay efficient and tech-savvy, so you can focus on what truly matters. Let’s simplify your workflow with the right tech solutions.
+As an Operations Manager, I provide hands-on support with the digital tools and systems you rely on daily. From setup to troubleshooting, I help you stay efficient and tech-savvy, so you can focus on what truly matters. Let’s simplify your workflow with the right tech solutions.
 
 
 
@@ -72,7 +72,7 @@ Communication & Client Relations
    Communications between brand collaborators
    Communications between business partners
    
-As an Executive Virtual Assistant, I specialize in managing client communications and fostering strong relationships. From onboarding to engagement, I help ensure smooth interactions that build trust and boost client satisfaction. Let’s work together to keep your communication clear, consistent, and professional.
+As an Operations Manager, I specialize in managing client communications and fostering strong relationships. From onboarding to engagement, I help ensure smooth interactions that build trust and boost client satisfaction. Let’s work together to keep your communication clear, consistent, and professional.
 
 Customer Support
 

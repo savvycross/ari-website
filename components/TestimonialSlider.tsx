@@ -3,6 +3,7 @@
 import { useState } from "react";
 import type { Testimonial } from "@/data/testimonials";
 import { Icon } from "./Icon";
+import { TestimonialAuthor } from "./TestimonialAuthor";
 
 /** One testimonial at a time, large serif quote, arrows to switch. */
 export function TestimonialSlider({ items }: { items: Testimonial[] }) {
@@ -24,11 +25,9 @@ export function TestimonialSlider({ items }: { items: Testimonial[] }) {
             <blockquote className="font-serif text-[clamp(1.6rem,3.4vw,3.1rem)] leading-[1.15] text-ink">
               <p>{t.excerpt}</p>
             </blockquote>
-            <figcaption className="mt-8 flex items-center gap-3 text-ink">
-              <span aria-hidden="true" className="h-px w-8 bg-ink/40" />
-              {t.name}
-              {t.company && <span className="text-muted">{t.company}</span>}
-            </figcaption>
+            <div className="mt-8">
+              <TestimonialAuthor t={t} />
+            </div>
           </figure>
         ))}
       </div>

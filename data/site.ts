@@ -47,13 +47,17 @@ export const nav = [
 
 /** Professional Bio, one entry per paragraph. */
 export const bio = [
-  "I’m an Executive Virtual Assistant.",
+  "I’m an Operations Manager.",
   "I support founders, business owners, and professionals by bringing structure, coordination, and follow-through to their operations. My approach is proactive and detail-oriented, with a focus on understanding each business’s unique needs and providing tailored support that keeps daily operations running smoothly.",
   "I’ve had the opportunity to work behind the scenes with different brands, contributing to their operations and growth in different ways.",
   "With one startup brand, my contributions supported its growth to over 400 customers within three months. Through influencer coordination and operational support, I also contributed to increasing the brand’s visibility, helping it gain recognition and win awards at major beauty shows in its country.",
   "With another brand, I supported business operations by managing client contracts and overseeing intern training. This helped create better coordination across client engagements, strengthen internal processes.",
   "With me by your side, you can enjoy more productive, stress-free days, stay on top of your priorities, and make meaningful progress towards your goals with ease.",
 ] as const;
+
+/** One complete sentence from the bio, shown under the Home page headline. */
+export const heroSentence =
+  "I support founders, business owners, and professionals by bringing structure, coordination, and follow-through to their operations.";
 
 export const coreSkills = [
   "Attention to detail",
