@@ -1,0 +1,84 @@
+@import "tailwindcss";
+
+/* ---------------------------------------------------------------
+   Design tokens — change a colour here and it updates site-wide.
+   --------------------------------------------------------------- */
+:root {
+  --ink: #2a1412;
+  --brand: #5e1a17;
+  --brand-soft: #8a3a33;
+  --blush: #f3dfd8;
+  --cream: #fbf6f1;
+  --marker: #e8b04a;
+  --muted: #6e5e5a; /* slightly darker than #7a6a66 so small text passes AA on blush */
+  --line: #e4d3cc;
+}
+
+@theme inline {
+  --color-ink: var(--ink);
+  --color-brand: var(--brand);
+  --color-brand-soft: var(--brand-soft);
+  --color-blush: var(--blush);
+  --color-cream: var(--cream);
+  --color-marker: var(--marker);
+  --color-muted: var(--muted);
+  --color-line: var(--line);
+  --font-serif: var(--font-fraunces), Georgia, serif;
+  --font-sans: var(--font-dm-sans), system-ui, sans-serif;
+  --font-hand: var(--font-caveat), "Comic Sans MS", cursive;
+  --shadow-soft: 0 1px 2px rgb(42 20 18 / 0.04), 0 8px 24px -8px rgb(42 20 18 / 0.12);
+  --shadow-lift: 0 2px 4px rgb(42 20 18 / 0.06), 0 18px 40px -12px rgb(42 20 18 / 0.22);
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 6rem;
+}
+
+body {
+  background: var(--cream);
+  color: var(--ink);
+  font-family: var(--font-sans);
+}
+
+::selection {
+  background: var(--marker);
+  color: var(--ink);
+}
+
+:focus-visible {
+  outline: 3px solid var(--brand);
+  outline-offset: 3px;
+  border-radius: 6px;
+}
+
+.bg-brand :focus-visible,
+.on-dark:focus-visible {
+  outline-color: var(--marker);
+}
+
+/* Gentle entrance animation; skipped entirely for reduced-motion users. */
+@media (prefers-reduced-motion: no-preference) {
+  .rise {
+    animation: rise 0.7s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+    animation-delay: var(--delay, 0ms);
+  }
+  @keyframes rise {
+    from {
+      opacity: 0;
+      transform: translateY(14px);
+    }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+/* Thin, on-brand scrollbar for horizontal rows (testimonials). */
+.scroll-row {
+  scrollbar-width: thin;
+  scrollbar-color: var(--brand-soft) transparent;
+}
