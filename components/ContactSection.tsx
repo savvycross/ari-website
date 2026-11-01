@@ -70,6 +70,7 @@ function LinkCard({
 export function ContactSection({ asPage = false }: { asPage?: boolean }) {
   const headline = contactPage.headline;
   const headingId = asPage ? "contact-heading" : "home-contact-heading";
+  const HeadingTag = asPage ? "h1" : "h2";
 
   return (
     <section
@@ -78,28 +79,32 @@ export function ContactSection({ asPage = false }: { asPage?: boolean }) {
     >
       <div className="grid gap-14 lg:grid-cols-[45fr_55fr] lg:gap-16">
         <div>
-          <div {...reveal("ui")}>
-            <Label>Contact</Label>
-          </div>
           {isPlaceholder(headline) ? (
-            <h2
+            // No headline from Pere yet: the small label doubles as the heading.
+            <HeadingTag
               id={headingId}
-              className="mt-6 rounded-xl border border-dashed border-brand/60 bg-marker/10 px-4 py-6 font-mono text-sm text-brand"
-              {...reveal("text")}
+              className="flex items-center gap-2.5 font-mono text-xs font-normal tracking-[0.18em] text-muted uppercase"
+              {...reveal("ui")}
             >
-              {headline}
-            </h2>
+              <Dot />
+              Contact
+            </HeadingTag>
           ) : (
-            <RevealWords
-              as={asPage ? "h1" : "h2"}
-              id={headingId}
-              text={headline}
-              accentLastFullStop
-              className={`mt-6 ${asPage ? "h1" : "h2"}`}
-            />
+            <>
+              <div {...reveal("ui")}>
+                <Label>Contact</Label>
+              </div>
+              <RevealWords
+                as={HeadingTag}
+                id={headingId}
+                text={headline}
+                accentLastFullStop
+                className={`mt-6 ${asPage ? "h1" : "h2"}`}
+              />
+            </>
           )}
 
-          <div className="mt-10 grid gap-3">
+          <div className={`${isPlaceholder(headline) ? "mt-6" : "mt-10"} grid gap-3`}>
             <LinkCard href={`mailto:${site.contact.email}`} label="EMAIL" value={site.contact.email} icon="mail" delay={0} />
             <LinkCard href={site.contact.whatsappHref} label="WHATSAPP" value={site.contact.phoneDisplay} icon="whatsapp" delay={80} />
             <div className="grid grid-cols-2 gap-3">

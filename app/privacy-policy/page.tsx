@@ -14,10 +14,7 @@ export default function PrivacyPolicyPage() {
   return (
     <Wrap className="pt-14 pb-24 sm:pt-20">
       <div className="max-w-3xl">
-        <p className="rounded-xl border border-dashed border-brand/60 bg-marker/10 px-4 py-3 font-mono text-xs text-brand">
-          TODO_PERE: template, please review before launch
-        </p>
-        <h1 className="h1 mt-10 text-ink">Privacy Policy</h1>
+        <h1 className="h1 text-ink">Privacy Policy</h1>
         <p className="mt-4 font-mono text-xs text-muted">Last updated: {updated}</p>
 
         <div className="mt-12 space-y-10 text-lg leading-relaxed text-muted [&_h2]:font-serif [&_h2]:text-3xl [&_h2]:text-ink [&_p]:mt-3 [&_ul]:mt-3 [&_ul]:list-disc [&_ul]:space-y-1 [&_ul]:pl-6">
