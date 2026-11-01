@@ -44,7 +44,7 @@ Photos live in `/public/images`:
 
 - `pere-portrait.webp`: Pere's portrait (Home and About)
 - `testimonials/esther-uzodinma.webp`, `testimonials/estelle-agyeman.webp`: testimonial photos (square, about 400×400px)
-- `brands/`: client logos. Add a file (SVG, or PNG with a transparent background), then set `logo: "/images/brands/<file>"` for that client in `data/experience.ts`. Logos are shown in white on the burgundy panels.
+- `brands/estebare.webp`, `brands/karr.webp`: client logos, white on a transparent background, shown on the burgundy panels. To replace one, save the new file under the same name and update its `width`/`height` in `data/experience.ts`.
 
 To swap the portrait, replace `public/images/pere-portrait.webp` with a new `.webp` of the same name (portrait shape, about 1100×1375px).
 

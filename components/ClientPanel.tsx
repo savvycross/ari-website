@@ -26,11 +26,11 @@ export function ClientPanel({ engagement, className = "" }: { engagement: Engage
           <div className="flex items-end justify-between gap-4">
             {engagement.logo ? (
               <Image
-                src={engagement.logo}
+                src={engagement.logo.src}
                 alt={`${engagement.client} logo`}
-                width={320}
-                height={120}
-                className="h-14 w-auto max-w-[70%] object-contain object-left brightness-0 invert sm:h-16"
+                width={engagement.logo.width}
+                height={engagement.logo.height}
+                className="h-auto max-h-16 w-auto max-w-[72%] object-contain object-left sm:max-h-20"
               />
             ) : (
               <span className="font-serif text-4xl leading-none sm:text-5xl">{engagement.client}</span>

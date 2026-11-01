@@ -18,10 +18,10 @@ export type Engagement = {
   testimonialId: string;
   website: string;
   /**
-   * Brand logo in /public/images/brands (SVG or PNG with a transparent
-   * background). Until one is added, the client name is shown instead.
+   * Brand logo in /public/images/brands: white on a transparent background,
+   * with its pixel size. Without one, the client name is shown instead.
    */
-  logo?: string;
+  logo?: { src: string; width: number; height: number };
 };
 
 export const engagements: Engagement[] = [
@@ -31,7 +31,7 @@ export const engagements: Engagement[] = [
     summary: "Contributed to brand growth and operations",
     testimonialId: "esther-uzodinma",
     website: "https://www.estebare.com",
-    // TODO_PERE: add the EsteBare logo, e.g. logo: "/images/brands/estebare.svg"
+    logo: { src: "/images/brands/estebare.webp", width: 897, height: 200 },
     workstreams: [
       {
         title: "Social Media & Brand Presence",
@@ -94,7 +94,7 @@ export const engagements: Engagement[] = [
       "Contributed to team coordination, client contract management, and business operations.",
     testimonialId: "estelle-agyeman",
     website: "https://karrcompany.co.uk",
-    // TODO_PERE: add the Karr logo, e.g. logo: "/images/brands/karr.svg"
+    logo: { src: "/images/brands/karr.webp", width: 550, height: 240 },
     workstreams: [
       {
         title: "Client Contracts & Administrative Coordination",
