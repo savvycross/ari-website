@@ -62,11 +62,11 @@ export default function AboutPage() {
           <div className="lg:col-span-4">
             <Heading id="skills-heading" text="Core Skills" count={coreSkills.length} />
           </div>
-          <ol className="grid border-t border-line sm:grid-cols-2 lg:col-span-8 lg:grid-cols-3">
+          <ol className="border-t border-line lg:col-span-8">
             {coreSkills.map((skill, i) => (
-              <li key={skill} className="flex items-baseline gap-4 border-b border-line py-5 pr-4" {...reveal("text", i * 50)}>
-                <span className="font-mono text-xs text-muted">{pad(i + 1)}</span>
-                <span className="text-lg text-ink">{skill}</span>
+              <li key={skill} className="grid grid-cols-[3rem_1fr] border-b border-line py-5" {...reveal("text", i * 50)}>
+                <span className="pt-1.5 font-mono text-xs text-muted">{pad(i + 1)}</span>
+                <span className="font-serif text-2xl leading-snug text-ink">{skill}</span>
               </li>
             ))}
           </ol>

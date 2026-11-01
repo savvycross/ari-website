@@ -75,7 +75,7 @@ const FUNCTIONAL = new Set([
   "Portrait of Pere Arilda", "perearilda@gmail.com", "+234 815 415 9539",
   "Request portfolio", "Next", "estebare.com", "karrcompany.co.uk", "RESULT",
   // captions confirmed by Pere (see content/brief-changes.md)
-  "Founder of Karr",
+  "Founder of Karr", "Client Testimonials",
   // form
   "Name", "Service needed", "Engagement type", "Timeline", "Message", "Your name",
   "you@company.com", "Select a service", "Select a type", "Select a timeline", "Not sure yet",

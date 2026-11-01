@@ -6,9 +6,10 @@ import { ExperienceList } from "@/components/ExperienceList";
 import { Heading, pad, Wrap } from "@/components/Layout";
 import { reveal, RevealWords } from "@/components/Reveal";
 import { Tape } from "@/components/Tape";
-import { TestimonialSlider } from "@/components/TestimonialSlider";
+import { FaqList } from "@/components/FaqList";
+import { TestimonialGrid } from "@/components/TestimonialGrid";
 import { engagements } from "@/data/experience";
-import { howIWork } from "@/data/faq";
+import { faq, howIWork } from "@/data/faq";
 import { services } from "@/data/services";
 import { bio, heroSentence, site } from "@/data/site";
 import { testimonials } from "@/data/testimonials";
@@ -19,9 +20,10 @@ export default function Home() {
       <Hero />
       <AboutStrip />
       <ExperienceRows />
+      <Testimonials />
       <ServicesList />
       <Process />
-      <Testimonials />
+      <Faq />
       <ContactSection />
     </>
   );
@@ -167,7 +169,7 @@ function ServicesList() {
 
 function Process() {
   return (
-    <section aria-labelledby="process-heading" className="border-t border-line bg-surface">
+    <section aria-labelledby="process-heading" className="border-t border-line">
       <Wrap className="py-20 sm:py-28">
         <div className="grid gap-6 lg:grid-cols-12 lg:gap-8">
           <div className="flex flex-wrap items-end justify-between gap-6 lg:col-span-5">
@@ -202,10 +204,28 @@ function Process() {
 
 function Testimonials() {
   return (
-    <section aria-label="Testimonials" className="border-t border-line">
+    <section aria-labelledby="testimonials-heading" className="border-t border-line bg-surface">
+      <Wrap className="py-20 sm:py-28">
+        <Heading id="testimonials-heading" text="Client Testimonials" count={testimonials.length} />
+        <div className="mt-12">
+          <TestimonialGrid />
+        </div>
+      </Wrap>
+    </section>
+  );
+}
+
+function Faq() {
+  return (
+    <section aria-labelledby="faq-heading" className="border-t border-line">
       <Wrap className="grid gap-10 py-20 sm:py-28 lg:grid-cols-12 lg:gap-8">
-        <div className="lg:col-span-10 lg:col-start-2" {...reveal("section")}>
-          <TestimonialSlider items={testimonials} />
+        <div className="lg:col-span-4">
+          <div className="lg:sticky lg:top-28">
+            <Heading id="faq-heading" text="Frequently Asked Questions" count={faq.length} />
+          </div>
+        </div>
+        <div className="lg:col-span-8">
+          <FaqList items={faq} />
         </div>
       </Wrap>
     </section>
