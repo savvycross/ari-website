@@ -55,6 +55,15 @@ After changing Pere's name or title, run `node scripts/generate-og.mjs` to refre
 Copy `.env.example` to `.env.local` and fill in:
 
 - `NEXT_PUBLIC_SITE_URL`: the live domain, once chosen
-- `NEXT_PUBLIC_FORM_ENDPOINT`: the Formspree form URL. Until this is set, the contact form shows an error asking people to email instead.
+- `NEXT_PUBLIC_FORM_ENDPOINT` (optional): leave empty and the contact form emails `perearilda@gmail.com` through FormSubmit. Set it only to use a different form service.
+
+## Contact form
+
+Enquiries are emailed to `perearilda@gmail.com` by [FormSubmit](https://formsubmit.co), free with no account.
+
+1. **Activate it once.** Send a test message from the live site. FormSubmit emails Pere an "Activate form" link. Click it, and every message after that is delivered.
+2. **Keep it out of spam.** If the activation email or an enquiry lands in Spam, open it and click *Report not spam* (Gmail), and add `submissions@formsubmit.co` to contacts. Gmail then trusts future enquiries.
+
+Each email has the subject "New enquiry from …", lists every field, and pressing Reply answers the person who wrote.
 
 On Vercel, add the same two values under *Project → Settings → Environment Variables*.

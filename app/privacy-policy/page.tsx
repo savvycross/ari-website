@@ -47,7 +47,7 @@ export default function PrivacyPolicyPage() {
               They are never sold or shared for marketing.
             </p>
             <p>
-              Form submissions are delivered by Formspree, a third-party form service, which stores them on my
+              Form submissions are delivered by FormSubmit, a third-party form service, which stores them on my
               behalf. Messages sent by email or WhatsApp are handled by those services.
             </p>
           </section>

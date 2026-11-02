@@ -7,6 +7,13 @@ import { Icon } from "./Icon";
 
 type Status = "idle" | "sending" | "sent" | "error";
 
+/**
+ * Where enquiries are sent. By default FormSubmit emails each one straight to
+ * Pere's inbox (no account needed; the very first message asks her to click
+ * "Activate" once). Set NEXT_PUBLIC_FORM_ENDPOINT to use another service.
+ */
+const formEndpoint = site.formEndpoint || `https://formsubmit.co/ajax/${site.contact.email}`;
+
 const engagementTypes = ["Monthly retainer", "Project", "Not sure yet"];
 const timelines = ["As soon as possible", "Within 2 weeks", "Within a month", "Flexible"];
 
@@ -40,20 +47,30 @@ export function ContactForm({ idPrefix = "contact" }: { idPrefix?: string }) {
 
   async function onSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    if (!site.formEndpoint) {
-      setStatus("error");
-      return;
-    }
+    const form = e.currentTarget;
+    const data = Object.fromEntries(new FormData(form)) as Record<string, string>;
+
+    // Bots fill the hidden "_honey" field; people never see it.
+    if (data._honey) return;
+
     setStatus("sending");
     try {
-      const res = await fetch(site.formEndpoint, {
+      const res = await fetch(formEndpoint, {
         method: "POST",
-        body: new FormData(e.currentTarget),
-        headers: { Accept: "application/json" },
+        headers: { "Content-Type": "application/json", Accept: "application/json" },
+        body: JSON.stringify({
+          ...data,
+          // Email settings: a clear subject, and Reply goes to the person who wrote.
+          _subject: `New enquiry from ${data.name} via perearilda website`,
+          _replyto: data.email,
+          _template: "table",
+          _captcha: "false",
+        }),
       });
-      if (!res.ok) throw new Error(String(res.status));
+      const result = await res.json().catch(() => ({}));
+      if (!res.ok || result.success === false || result.success === "false") throw new Error(result.message);
       setStatus("sent");
-      e.currentTarget.reset();
+      form.reset();
     } catch {
       setStatus("error");
     }
@@ -61,6 +78,7 @@ export function ContactForm({ idPrefix = "contact" }: { idPrefix?: string }) {
 
   return (
     <form onSubmit={onSubmit} className="grid gap-6">
+      <input type="text" name="_honey" tabIndex={-1} autoComplete="off" aria-hidden="true" className="hidden" />
       <div className="grid gap-6 sm:grid-cols-2">
         <div>
           <label htmlFor={id("name")} className={label}>Name</label>

@@ -32,7 +32,7 @@ export const site = {
     linkedin: "https://www.linkedin.com/in/pere-arilda",
   },
 
-  // TODO_FORM_ENDPOINT: set NEXT_PUBLIC_FORM_ENDPOINT to the Formspree (or similar) URL.
+  // Optional: another form service URL. Empty = FormSubmit emails Pere directly.
   formEndpoint: process.env.NEXT_PUBLIC_FORM_ENDPOINT || "",
 } as const;
 
